@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,6 +54,12 @@ public class ViewController {
 	@GetMapping("/ex03")
 	public String ex03(Model model) {
 		
+		SimpleVO vo = SimpleVO.builder()
+	              .sno(1)
+	              .first("홍길동")
+	              .regdate(LocalDateTime.now())
+	              .build();
+		
 		ArrayList<SimpleVO> list = new ArrayList<>();
 		for(int i = 1; i <= 10; i++) {
 			SimpleVO simpleVO = SimpleVO.builder()
@@ -64,6 +71,7 @@ public class ViewController {
 			list.add(simpleVO);
 		}
 		
+		model.addAttribute("vo", vo);
 		model.addAttribute("list", list);
 		
 		return "view/ex03";
@@ -88,5 +96,43 @@ public class ViewController {
 		
 		return "view/ex03_result";
 	}
+	
+	//ex04 - 타임리프 인클루드
+	@GetMapping("/ex04")
+	public String ex04() {
+		return "view/ex04";
+	}
+	
+	//ex05 - 타임리프 템플릿 형식으로 결합하기
+	@GetMapping("/ex05")
+	public String ex05() {
+		return "view/ex05";
+	}
+	
+	////////////////////////////////////////////////////
+	//quiz
+	@GetMapping("/quiz")
+	public String quiz(Model model) {
+		
+		SimpleVO vo = SimpleVO.builder()
+							  .sno(10)
+							  .first("홍")
+							  .last("길동")
+							  .regdate(LocalDateTime.now())
+							  .build();
+		
+		model.addAttribute("vo", vo);
+		
+		return "view/quiz";
+	}
+	
+	@GetMapping("quiz_result01")
+	public String quiz_result01(@ModelAttribute("sno") int sno,
+							    @ModelAttribute("name") String name) {
+		
+		System.out.println(sno + ", " + name);
+		return "view/quiz_result01";
+	}
+	
 	
 }

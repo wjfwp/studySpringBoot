@@ -16,5 +16,6 @@ public class SimpleVO {
 
 	private int sno;
 	private String first;
+	private String last;
 	private LocalDateTime regdate;
 }
