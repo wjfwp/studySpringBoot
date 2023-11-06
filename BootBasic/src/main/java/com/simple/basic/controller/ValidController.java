@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.simple.basic.command.MemberVO;
 import com.simple.basic.command.ValidVO;
 
 @Controller
@@ -53,10 +54,36 @@ public class ValidController {
 			return "valid/view"; //실패시 원래 화면으로
 		} //err end
 		
-			
 				
 		return "valid/result";
 	}
+	
+	//////////////////////////////////////////////////////
+	@GetMapping("/quiz01")
+	public String quiz01() {
+		return "valid/quiz01";
+	}
+	
+	@PostMapping("/quizForm")
+	public String quizForm(@Valid @ModelAttribute("vo") MemberVO vo, Errors errors, Model model) {
+		
+		if(errors.hasErrors()) {
+			List<FieldError> list = errors.getFieldErrors();
+			for(FieldError err : list) {
+				if(err.isBindingFailure()) {
+					model.addAttribute("valid_" + err.getField(), "잘못된 값을 입력했습니다.");
+				} else {
+					model.addAttribute("valid_" + err.getField(), err.getDefaultMessage());
+				}
+			}
+			
+			return "valid/quiz01";
+		}
+		
+		
+		return "valid/quiz01_result";
+	}
+	
 	
 	
 }
