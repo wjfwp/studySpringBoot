@@ -15,19 +15,15 @@
 				<td>연락처</td>
 				<td>공개여부</td>
 			</tr>
+			
 			<tr th:each="vo : ${list}">
 				
-				<th:block th:if="${vo.secret == 'y'}"	>			
 					<td>[[${vo.mno}]]</td>
-					<td>비밀글입니다.</td>
-				</th:block>
-				
-				<th:block th:unless="${vo.secret == 'y'}">
-					<td>[[${vo.mno}]]</td>
-					<td>[[${vo.memo}]]</td>
+					
+					<td>[[${vo.secret == 'y' ? '비밀글입니다.' : vo.memo}]]</td>
+					
 					<td>[[${vo.phone}]]</td>
-					<td>[[${vo.secret}]]</td>
-				</th:block>
+					<td>[[${vo.secret == 'y' ? '비공개' : '공개'}]]</td>
 			</tr>
 			
 	</table>
