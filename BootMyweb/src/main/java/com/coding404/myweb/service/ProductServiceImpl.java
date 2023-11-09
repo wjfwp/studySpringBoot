@@ -23,4 +23,14 @@ public class ProductServiceImpl implements ProductService{
 		return productMapper.getList(writer);
 	}
 
+	@Override
+	public ProductVO getDetail(int prod_id) {
+		return productMapper.getDetail(prod_id);
+	}
+
+	@Override
+	public int productUpdate(ProductVO vo) {
+		return productMapper.productUpdate(vo);
+	}
+
 }

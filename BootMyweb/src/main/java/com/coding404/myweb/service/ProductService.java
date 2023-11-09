@@ -8,5 +8,6 @@ public interface ProductService {
 
 	public int productRegist(ProductVO vo);
 	public ArrayList<ProductVO> getList(String writer);
-	
+	public ProductVO getDetail(int prod_id);
+	public int productUpdate(ProductVO vo);
 }

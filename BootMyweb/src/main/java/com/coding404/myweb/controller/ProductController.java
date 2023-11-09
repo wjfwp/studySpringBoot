@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.coding404.myweb.command.ProductVO;
@@ -42,7 +43,12 @@ public class ProductController {
 	
 	
 	@GetMapping("/productDetail")
-	public String detail() {
+	public String detail(@RequestParam("prod_id") int prod_id, Model model) {
+		
+		//조회~ prod_id가 필요
+		ProductVO vo = productService.getDetail(prod_id);
+		model.addAttribute("vo", vo);
+		
 		return "product/productDetail";
 	}
 	
@@ -53,6 +59,18 @@ public class ProductController {
 		
 		int result = productService.productRegist(vo);
 		String msg = result == 1 ? "등록 되었습니다." : "등록 실패, 관리자에게 문의하세요.";
+		ra.addFlashAttribute("msg", msg);
+		
+		return "redirect:/product/productList";
+	}
+	
+	@PostMapping("/modifyForm")
+	public String modifyForm(ProductVO vo, RedirectAttributes ra) {
+		
+		//System.out.println(vo.toString());
+		int result = productService.productUpdate(vo);
+		String msg = result == 1 ? "수정 성공" : "실패";
+		
 		ra.addFlashAttribute("msg", msg);
 		
 		return "redirect:/product/productList";

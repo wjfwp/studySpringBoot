@@ -98,7 +98,7 @@
 												<td>.....</td>
 
 												<td>
-													<a title="상세보기(클릭)" href="product_detail.html">
+													<a title="상세보기(클릭)" th:href="@{productDetail(prod_id=${vo.prod_id}) }">
 														[[${vo.prod_name}]]
 													</a>
 												</td>
@@ -106,7 +106,7 @@
 												<td>[[${vo.prod_price}]]원</td>
 												<td>[[${vo.prod_count}]]개</td>
 												<td>[[${vo.prod_discount}]]%</td>
-												<td>[[${vo.prod_purchase_yn == 'y' ? '1개' : '제한없음'}]]</td>
+												<td>[[${vo.prod_purchase_yn == 'Y' ? '1회 제한' : '제한없음'}]]</td>
 												<td>[[${vo.prod_enddate}]]</td>
 												<td>[[${vo.prod_writer}]]</td>
 
