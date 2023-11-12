@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.coding404.myweb.command.ProductVO;
 import com.coding404.myweb.service.ProductService;
+import com.coding404.myweb.util.Criteria;
 
 @Controller
 @RequestMapping("/product")
@@ -24,13 +25,19 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping("/productList")
-	public String list(Model model) {
+	public String list(Model model, Criteria cri) {
 		
 		//로그인 기능이 없으므로, admin이라는 계정 기반으로 조회
 		String writer = "admin";
 		
-		ArrayList<ProductVO> list = productService.getList(writer);
+		//1st
+		//ArrayList<ProductVO> list = productService.getList(writer);
+		//model.addAttribute("list", list);
+		
+		//2nd
+		ArrayList<ProductVO> list = productService.getList(writer, cri);
 		model.addAttribute("list", list);
+		
 		
 		return "product/productList";
 	}
@@ -72,6 +79,15 @@ public class ProductController {
 		String msg = result == 1 ? "수정 성공" : "실패";
 		
 		ra.addFlashAttribute("msg", msg);
+		
+		return "redirect:/product/productList";
+	}
+	
+	
+	@PostMapping("/deleteForm")
+	public String deleteForm(@RequestParam("prod_id") int prod_id) {
+		
+		productService.productDelete(prod_id);
 		
 		return "redirect:/product/productList";
 	}

@@ -28,7 +28,11 @@
   	</insert>
   	
   	<select id="getList" resultType="ProductVO">
-  		select * from product where prod_writer = #{writer}
+  		select * 
+  		from product 
+  		where prod_writer = #{writer}
+  		order by prod_id desc
+  		limit #{cri.pageStart}, #{cri.amount}
   	</select>
   	
   	<select id="getDetail" resultType="ProductVO">
@@ -48,6 +52,10 @@
   		where prod_id = #{prod_id} and prod_writer = #{prod_writer}
   							
   	</update>
+  	
+  	<delete id="productDelete">
+  		delete from product where prod_id = #{prod_id}
+  	</delete>
   	
   	
   </mapper>
