@@ -11,6 +11,7 @@ public interface ProductService {
 	
 	//public ArrayList<ProductVO> getList(String writer);
 	public ArrayList<ProductVO> getList(String writer, Criteria cri);
+	public int getTotal(String writer); //전체 게시글 수 
 	
 	public ProductVO getDetail(int prod_id);
 	public int productUpdate(ProductVO vo);

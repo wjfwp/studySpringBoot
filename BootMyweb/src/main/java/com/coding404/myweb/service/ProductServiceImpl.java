@@ -25,6 +25,11 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+	public int getTotal(String writer) {
+		return productMapper.getTotal(writer);
+	}
+
+	@Override
 	public ProductVO getDetail(int prod_id) {
 		return productMapper.getDetail(prod_id);
 	}
@@ -38,5 +43,6 @@ public class ProductServiceImpl implements ProductService{
 	public void productDelete(int prod_id) {
 		productMapper.productDelete(prod_id);
 	}
+
 
 }

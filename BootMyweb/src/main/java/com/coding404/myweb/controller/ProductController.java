@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.coding404.myweb.command.ProductVO;
 import com.coding404.myweb.service.ProductService;
 import com.coding404.myweb.util.Criteria;
+import com.coding404.myweb.util.PageVO;
 
 @Controller
 @RequestMapping("/product")
@@ -36,8 +37,14 @@ public class ProductController {
 		
 		//2nd
 		ArrayList<ProductVO> list = productService.getList(writer, cri);
-		model.addAttribute("list", list);
 		
+		int total = productService.getTotal(writer);
+		PageVO pageVO = new PageVO(cri, total);
+
+		model.addAttribute("list", list);
+		model.addAttribute("pageVO", pageVO);
+		
+		System.out.println(pageVO.toString());
 		
 		return "product/productList";
 	}

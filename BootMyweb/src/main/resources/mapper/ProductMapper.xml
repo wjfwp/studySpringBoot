@@ -57,5 +57,10 @@
   		delete from product where prod_id = #{prod_id}
   	</delete>
   	
+  	<select id="getTotal" resultType="int">
+  		select count(*) as total
+  		from product
+  		where prod_writer = #{prod_writer}
+  	</select>
   	
   </mapper>
