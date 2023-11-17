@@ -38,7 +38,7 @@ public class ProductController {
 		//2nd
 		ArrayList<ProductVO> list = productService.getList(writer, cri);
 		
-		int total = productService.getTotal(writer);
+		int total = productService.getTotal(writer, cri);
 		PageVO pageVO = new PageVO(cri, total);
 
 		model.addAttribute("list", list);

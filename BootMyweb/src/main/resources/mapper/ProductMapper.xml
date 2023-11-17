@@ -27,12 +27,48 @@
   			   )
   	</insert>
   	
+  	<!-- 
+  		동적쿼리 if, choose, foreach 문장이 있다. 
+  		동적쿼리절에는 vo의 getter or map의 key가 전달됨
+  	-->
+  	
   	<select id="getList" resultType="ProductVO">
   		select * 
   		from product 
   		where prod_writer = #{writer}
-  		order by prod_id desc
+  		
+  		<if test="cri.searchName != '' and cri.searchName != null">
+  			and prod_name like concat('%', #{cri.searchName}, '%')
+  		</if>
+  		<if test="cri.searchContent != '' and cri.searchContent != null">
+			and prod_content like concat('%', #{cri.searchContent}, '%')
+		</if>
+		<if test="cri.startDate != '' and cri.startDate != null">
+			<![CDATA[ and prod_enddate >= #{cri.startDate} ]]>
+		</if>
+		<if test="cri.endDate != '' and cri.endDate != null">
+			<![CDATA[ and prod_enddate <= #{cri.endDate} ]]>
+  		</if>
+  		
+  		order by 
+  		<if test="cri.searchPrice == 'asc' ">
+  			prod_price asc,
+  		</if>
+  		<if test="cri.searchPrice == 'desc' ">
+  			prod_price desc,
+  		</if>
+	  	prod_id desc
+	  	
   		limit #{cri.pageStart}, #{cri.amount}
+  		
+  		<!-- 
+  		<choose>
+  			<when test=""></when>
+  			<when test=""></when>
+  			<when test=""></when>
+  			<otherwise></otherwise>
+  		</choose> 
+  		-->
   	</select>
   	
   	<select id="getDetail" resultType="ProductVO">
@@ -60,7 +96,21 @@
   	<select id="getTotal" resultType="int">
   		select count(*) as total
   		from product
-  		where prod_writer = #{prod_writer}
+  		where prod_writer = #{writer}
+  		
+  		<if test="cri.searchName != '' and cri.searchName != null">
+  			and prod_name like concat('%', #{cri.searchName}, '%')
+  		</if>
+  		<if test="cri.searchContent != '' and cri.searchContent != null">
+			and prod_content like concat('%', #{cri.searchContent}, '%')
+		</if>
+		<if test="cri.startDate != '' and cri.startDate != null">
+			<![CDATA[ and prod_enddate >= #{cri.startDate} ]]>
+		</if>
+		<if test="cri.endDate != '' and cri.endDate != null">
+			<![CDATA[ and prod_enddate <= #{cri.endDate} ]]>
+  		</if>
+  		
   	</select>
   	
   </mapper>

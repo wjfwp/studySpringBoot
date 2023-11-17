@@ -16,7 +16,8 @@ public interface ProductMapper {
 	//public ArrayList<ProductVO> getList(String writer); //조회
 	public ArrayList<ProductVO> getList(@Param("writer") String writer, 
 										@Param("cri") Criteria cri); //조회 
-	public int getTotal(String writer); //전체 게시글 수 
+	public int getTotal(@Param("writer") String writer,
+			            @Param("cri") Criteria cri ); //전체 게시글 수 
 	
 	public ProductVO getDetail(int prod_id);
 	public int productUpdate(ProductVO vo);

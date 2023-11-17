@@ -8,6 +8,13 @@ public class Criteria {
 	private int page; //조회하는 페이지
 	private int amount; //데이터 개수
 	
+	//검색에 필요한 키워드 선언
+	private String searchName;
+	private String searchContent;
+	private String searchPrice;
+	private String startDate;
+	private String endDate;
+	
 	//기본생성자로 만들어지면 1, 10 이 기본값
 	public Criteria() {
 		this.page = 1;

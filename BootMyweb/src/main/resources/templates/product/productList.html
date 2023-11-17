@@ -11,26 +11,30 @@
 				<div class="midiaq">
 					<div class="page_title">관리자검색</div>
 
-					<form name="###########" action="############" method="get" >
+					<form name="searchForm" action="productList" method="get" >
+					
+					<input type="hidden" name="page" value="1"/>
+					<input type="hidden" name="amount" th:value="${pageVO.amount}"/>
+					
 					<div class="search_block flfull">
 
 						<div class="fl">
 							<div>
 								<span class="search_th">상품이름 검색</span>
-								<input type="text" class="" placeholder="상품 검색" name="searchName">
+								<input type="text" class="" placeholder="상품 검색" name="searchName" th:value="${pageVO.cri.searchName}">
 							</div>
 							
 							<div>
 								<span class="search_th">상품내용 검색</span>
-								<input type="text" class="" placeholder="상품 검색" name="searchContent">
+								<input type="text" class="" placeholder="상품 검색" name="searchContent" th:value="${pageVO.cri.searchContent}">
 							</div>
 							
 							<div>
 								<span class="search_th">판매가 정렬</span>
 								<select class="" name="searchPrice">
-									<option value="none">정렬방식</option>
-									<option value="asc">낮은순</option>
-									<option value="desc">높은순</option>
+									<option value="none" th:selected="${pageVO.cri.searchPrice == 'none'}">정렬방식</option>
+									<option value="asc" th:selected="${pageVO.cri.searchPrice == 'asc'}">낮은순</option>
+									<option value="desc" th:selected="${pageVO.cri.searchPrice == 'desc'}">높은순</option>
 								</select>
 							</div>
 
@@ -38,8 +42,8 @@
 							<div class="pdt15"></div>
 							<div>
 								<span class="search_th">판매마감일</span>
-								<input type="text" class="datepicker" readonly placeholder="날짜선택" name="startDate"/> -
-								<input type="text" class="datepicker" readonly placeholder="날짜선택" name="endDate"/>
+								<input type="text" class="datepicker" readonly placeholder="날짜선택" name="startDate" th:value="${pageVO.cri.startDate}"/> -
+								<input type="text" class="datepicker" readonly placeholder="날짜선택" name="endDate" th:value="${pageVO.cri.endDate}"/>
 							</div>
 							<!-- 
 							<div>
@@ -52,7 +56,7 @@
 
 						<div class="fr">
 							<div class="search_btn_area">
-								<a href="#" class="normal_btn purplebtn">검색</a>
+								<a href="#" class="normal_btn purplebtn" id="searchBtn">검색</a>
 								<a href="#" class="normal_btn purplebtn02">등록</a>
 							</div>
 						</div>
@@ -119,32 +123,67 @@
 										<div class="page">
 											<ul>
 												<li>
-													<a th:href="@{productList(page=1, amount=${pageVO.amount})}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+													<a th:href="@{productList(page=1,
+																			  amount=${pageVO.amount},
+																			  searchName=${pageVO.cri.searchName},
+																			  searchContent=${pageVO.cri.searchContent},
+																			  searchPrice=${pageVO.cri.searchPrice},
+																			  startDate=${pageVO.cri.startDate},
+																			  endDate=${pageVO.cri.endDate}
+																			  )}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
 												</li>
 												
 												<!-- 2. 이전 버튼 -->
 												<th:block th:if="${pageVO.prev}">
 												<li style="margin-right:5px;">
-													<a th:href="@{productList(page=${pageVO.start - 1}, amount=${pageVO.amount})}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+													<a th:href="@{productList(page=${pageVO.start - 1},
+																			  amount=${pageVO.amount},
+																			  searchName=${pageVO.cri.searchName},
+																			  searchContent=${pageVO.cri.searchContent},
+																			  searchPrice=${pageVO.cri.searchPrice},
+																			  startDate=${pageVO.cri.startDate},
+																			  endDate=${pageVO.cri.endDate}
+																			  )}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
 												</li>
 												</th:block>
 												
 												<!-- 1. 페이지 반복 -->
 												<th:block th:each="page : ${pageVO.pageList}">
 												<li th:class="${page == pageVO.page ? 'on' : ''}">
-													<a th:href="@{productList(page=${page}, amount=${pageVO.amount} )}">[[${page}]]</a>
+													<a th:href="@{productList(page=${page}, 
+																			  amount=${pageVO.amount},
+																			  searchName=${pageVO.cri.searchName},
+																			  searchContent=${pageVO.cri.searchContent},
+																			  searchPrice=${pageVO.cri.searchPrice},
+																			  startDate=${pageVO.cri.startDate},
+																			  endDate=${pageVO.cri.endDate}
+																			  )}">[[${page}]]</a>
 												</li>
 												</th:block>
 												
 												<!-- 3. 다음 버튼 -->
 												<th:block th:if="${pageVO.next}">
 												<li style="margin-left:5px;">
-													<a th:href="@{productList(page=${pageVO.end + 1}, amoun=${pageVO.amount})}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+													<a th:href="@{productList(page=${pageVO.end + 1},
+																			  amoun=${pageVO.amount},
+																			  searchName=${pageVO.cri.searchName},
+																			  searchContent=${pageVO.cri.searchContent},
+																			  searchPrice=${pageVO.cri.searchPrice},
+																			  startDate=${pageVO.cri.startDate},
+																			  endDate=${pageVO.cri.endDate}
+																			  )}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
 												</li>
 												</th:block>
 												
 												<li>
-													<a th:href="@{productList(page=${pageVO.realEnd}, amount=${pageVO.amount})}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+													<a th:href="@{productList(page=${pageVO.realEnd},
+																			  amount=${pageVO.amount},
+																			  searchName=${pageVO.cri.searchName},
+																			  searchContent=${pageVO.cri.searchContent},
+																			  searchPrice=${pageVO.cri.searchPrice},
+																			  startDate=${pageVO.cri.startDate},
+																			  endDate=${pageVO.cri.endDate}
+																			  )}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 												</li>
 											</ul>
 										</div>
@@ -240,7 +279,17 @@
 		//데이터핸들링
 		function handleChange() {
 			//console.log(event.target);
-			location.href='productList?page=1&amount=' + event.target.value;
+			//location.href='productList?page=1&amount=' + event.target.value;
+			
+			document.searchForm.amount.value = event.target.value; 
+			document.searchForm.submit(); //폼태그 서브밋
+		}
+		
+		//검색버튼
+		var searchBtn = document.getElementById("searchBtn");
+		searchBtn.onclick = function() {
+			event.preventDefault; //a중지
+			document.searchForm.submit(); //폼태그 서브밋
 		}
 		
 	</script>
