@@ -1,13 +1,13 @@
-package com.project.court;
+package com.project.basic;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProjectApplicationTests {
+public class JDBCTest { 
 
 	@Test
-	void contextLoads() {
+	public void testCode01() {
+		
 	}
-
 }
