@@ -1,13 +1,13 @@
-package com.project.basic;
+package com.self.basic;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class JDBCTest { 
+class SelfApplicationTests {
 
 	@Test
-	public void testCode01() {
-		
+	void contextLoads() {
 	}
+
 }
